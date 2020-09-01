@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Chat</title>
+</head>
+<body>
+    <H3>Simple Chat</H3>
+    <input id="input" type="text" />
+    <button onclick="send()">Send</button>
+    <button onclick="abc()">ABC</button>
+    <button onclick="ping()">PING</button>
+    <button onclick="sping()">SPING</button>
+    <pre id="output"></pre>
+    <script>
+        var input = document.getElementById('input');
+        var output = document.getElementById('output');
+        var socket = new WebSocket("wss://7r1m6q739g.execute-api.ap-northeast-1.amazonaws.com/dev");
+
+        socket.onopen = function() {
+           output.innerHTML += "Connected!\n";
+        };
+
+        socket.onmessage = function(e) {
+            output.innerHTML += "Received：" + e.data + "\n";
+        };
+
+        function send() {
+            socket.send(JSON.stringify(
+                {
+                    "action":"sendmessage",
+                    "data": input.value
+                }
+            ));
+            input.value = "";
+        };
+
+        function abc() {
+            socket.send(JSON.stringify(
+                {
+                    "action":"abc",
+                    "data": input.value
+                }
+            ));
+            input.value = "";
+        };
+
+
+        function ping() {
+            socket.send(JSON.stringify(
+                {
+                    "action":"ping",
+                    "data": input.value
+                }
+            ));
+            input.value = "";
+        };
+
+        function sping() {
+            socket.send(JSON.stringify(
+                {
+                    "action":"sping",
+                    "data": input.value
+                }
+            ));
+            input.value = "";
+        };
+    </script>
+</body>
+</html>
