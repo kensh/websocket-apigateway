@@ -8,10 +8,14 @@ table = dynamodb.Table(TABLE_NAME)
 
 
 def lambda_handler(event, context):
+    
+    print(json.dumps(event))
 
-    connectionId = event['requestContext']['connectionId']
 
     try:
+        # raise Exception('this is dummy error!')
+        
+        connectionId = event['requestContext']['connectionId']
         item = {
              'connectionId': connectionId
         }
@@ -26,7 +30,7 @@ def lambda_handler(event, context):
     }
 
     return {
-        "statusCode": 200,
+        "statusCode": 200, # to fail the connection, return not 200
         "body": json.dumps({
             "message": "Connected."
         }),

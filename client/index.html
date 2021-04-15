@@ -17,13 +17,26 @@
         var output = document.getElementById('output');
         var socket = new WebSocket("wss://7r1m6q739g.execute-api.ap-northeast-1.amazonaws.com/dev");
 
-        socket.onopen = function() {
+        socket.onopen = function(e) {
+           console.log(e);
            output.innerHTML += "Connected!\n";
         };
 
         socket.onmessage = function(e) {
+            console.log(e);
             output.innerHTML += "Received：" + e.data + "\n";
         };
+
+        socket.onerror = function(e) {
+            console.log(e);
+            output.innerHTML += "Error：" + e + "\n";
+        };
+
+        socket.onclose = function(e) {
+            console.log(e);
+            output.innerHTML += "Closed:" + e + "\n";
+        };
+        
 
         function send() {
             socket.send(JSON.stringify(
